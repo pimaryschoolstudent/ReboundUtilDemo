@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">ReboundUtilDemo</string>
+	<string name="normal_activity">This is not a simple sliding interface</string>
+	<string name="sliding_activity">This is a nested interface recyclerview</string>
+	<string name="go_next_activity">Go to the next page</string>
+</resources>
