@@ -1,11 +1,9 @@
 package hbb.example.reboundutil
 
+
 import android.content.Context
-import android.text.method.Touch.scrollTo
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
-import android.view.View
 import android.widget.LinearLayout
 import android.widget.Scroller
 
@@ -16,7 +14,6 @@ import android.widget.Scroller
  */
 class ReboundLayout : LinearLayout {
 
-    private val TAG = "Rebound"
     /**
      * 滑动辅助
      * */
@@ -63,7 +60,6 @@ class ReboundLayout : LinearLayout {
     }
 
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
-        Log.e(TAG,"拦截：${isInterceptEvent} startY$startY ${ev!!.y}" )
         if (!isInterceptEvent){
             return super.onInterceptTouchEvent(ev)
         }else{
@@ -178,7 +174,6 @@ class ReboundLayout : LinearLayout {
      * 默认值为0
      * */
     fun setHeaderHeight(headerHeight:Int){
-        Log.e(TAG,"headerHeight:$headerHeight")
         this.headerHeight = headerHeight
         startScollY = headerHeight
         scrollTo(0,headerHeight)
@@ -190,7 +185,6 @@ class ReboundLayout : LinearLayout {
      * 默认值为0
      * */
     fun setBottomHeight(bottomHeight:Int){
-        Log.e(TAG,"bottomHeight:$bottomHeight")
         this.bottomHeight = bottomHeight
         startScollY = headerHeight
         scrollTo(0,headerHeight)
@@ -201,15 +195,17 @@ class ReboundLayout : LinearLayout {
      * 滑动界面拦截事件开关
      * */
     fun setIsInterceptEvent(b:Boolean){
-        Log.e(TAG,"设置为：$b")
         this.isInterceptEvent = b
     }
+
     fun setIsScrollTop(b:Boolean){
         this.isScrollTop = b
     }
+
     fun setIsScrollBottom(b:Boolean){
         this.isScrollBottom = b
     }
+
     fun setIsStartCanScroll(b:Boolean){
         this.isStartCanScroll = b
     }

@@ -1,7 +1,6 @@
 package hbb.example.reboundutil
 
 import android.app.Activity
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,7 +56,6 @@ class ReboundUtil {
             return util
         }
     }
-    private val TAG = "Rebound"
     /**
      * 界面布局
      * contentLayout 界面根布局
@@ -307,7 +305,6 @@ class ReboundUtil {
         }
         recyclerView.post {
             var iscanScroll = recyclerView.canScrollVertically(1)
-            Log.e(TAG,"是否可以移动：${iscanScroll}")
             reboundLayout?.setIsStartCanScroll(iscanScroll)
 
             if (iscanScroll){
@@ -318,17 +315,13 @@ class ReboundUtil {
                 }
                 recyclerViewOnScrollListener = object :RecyclerView.OnScrollListener(){
                     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                        Log.e(TAG,"滑动：${recyclerView.canScrollVertically(1)} \t${recyclerView.canScrollVertically(-1)}")
                         if(!recyclerView.canScrollVertically(1)) {
-                            Log.e(TAG,"到底")
                             reboundLayout?.setIsScrollBottom(true)
                             reboundLayout?.setIsInterceptEvent(true)
                         }else if(!recyclerView.canScrollVertically(-1)){
-                            Log.e(TAG,"到底")
                             reboundLayout?.setIsScrollTop(true)
                             reboundLayout?.setIsInterceptEvent(true)
                         }else{
-                            Log.e(TAG,"滑动")
                             reboundLayout?.setIsScrollBottom(false)
                             reboundLayout?.setIsScrollBottom(false)
                             reboundLayout?.setIsInterceptEvent(false)
@@ -339,11 +332,11 @@ class ReboundUtil {
 
                 if (!recyclerView.canScrollVertically(-1)){
                     reboundLayout?.setIsScrollTop(true)
+                    reboundLayout?.setIsScrollBottom(false)
                     reboundLayout?.setIsInterceptEvent(true)
                 }
                 recyclerView.addOnScrollListener(recyclerViewOnScrollListener!!)
             }else{
-                Log.e(TAG,"这里")
                 reboundLayout?.setIsScrollTop(true)
                 reboundLayout?.setIsScrollBottom(true)
                 reboundLayout?.setIsInterceptEvent(true)
