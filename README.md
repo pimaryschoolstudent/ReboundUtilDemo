@@ -34,7 +34,9 @@
         .setHeadBoundView(R.layout.header_view, LayoutInflater.from(this)) //设置头部View
         .setBottomBoundView(bottomView) //设置底部View
         .setBoundType(ReboundUtil.HEADER_REBOUND_LIMIT,ReboundUtil.BOTTOM_REBOUND_NORMAL) //设置滑动方式  limit：滑动距离不超过组件距离  normal：滑动距离可超过组件距离
+
 注意：需要在元素发生变化时更新回弹监听
+
 	data.add("${data.size+1}")
 	adapter.notifyDataSetChanged()
 	ReboundUtil.getUtil(this).updateRecyclerviewLayoutChange(recyclerView) //更新监听
