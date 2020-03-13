@@ -2,7 +2,9 @@ package hbb.example.reboundutil
 
 
 import android.content.Context
+import android.text.method.Touch.scrollTo
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import android.widget.LinearLayout
 import android.widget.Scroller
@@ -54,6 +56,26 @@ class ReboundLayout : LinearLayout {
     private var headerBoundType = ReboundUtil.HEADER_REBOUND_NORMAL
     private var bottomBoundType = ReboundUtil.BOTTOM_REBOUND_NORMAL
 
+    /**
+     * 回弹时间（毫秒）
+     * */
+    private var reboundDuration:Int = 1000
+
+    /**
+     * 滑动监听
+     * */
+    private var reboundListener:OnReboundListener ?= null
+
+    /**
+     * 回弹类别
+     * */
+    private var reboundType = -1
+
+    /**
+     * 回弹距离
+     * */
+    private var reboundTarget = 0
+
     constructor(context: Context, attributeSet: AttributeSet?=null):super(context,attributeSet){
         mScroller = Scroller(context)
         orientation = VERTICAL
@@ -104,7 +126,13 @@ class ReboundLayout : LinearLayout {
                 startY = event.y.toInt()
             }
             MotionEvent.ACTION_UP ->{
-                mScroller.startScroll(0,scrollY,0,-(scrollY-startScollY),1000)
+                reboundType =if (scrollY-startScollY>0){
+                    ReboundUtil.REBOUND_BOTTOM
+                }else{
+                    ReboundUtil.REBOUND_HEADER
+                }
+                reboundListener?.onRebound(reboundType,ReboundUtil.REBOUND_START)
+                mScroller.startScroll(0,scrollY,0,-(scrollY-startScollY),reboundDuration)
             }
             MotionEvent.ACTION_MOVE->{
                 if (!mScroller.isFinished){
@@ -149,6 +177,16 @@ class ReboundLayout : LinearLayout {
     override fun computeScroll() {
         super.computeScroll()
         if (mScroller.computeScrollOffset()) {
+
+            if (reboundTarget!= mScroller.currY){
+                reboundTarget = mScroller.currY
+                if (reboundTarget == headerHeight){
+                    reboundListener?.onRebound(reboundType,ReboundUtil.REBOUND_END)
+                }else{
+                    reboundListener?.onRebound(reboundType,ReboundUtil.REBOUND_ING)
+                }
+            }
+
             scrollTo(0, mScroller.currY)
             postInvalidate()
         }
@@ -229,4 +267,21 @@ class ReboundLayout : LinearLayout {
         }
     }
 
+    /**
+     * 设置间隔
+     * */
+    fun setReboundDuration(duration:Int){
+        reboundDuration = duration
+    }
+
+    /**
+     * 设置监听
+     * */
+    fun setOnReboundListener(listener:OnReboundListener){
+        this.reboundListener = listener
+    }
+
+    interface OnReboundListener{
+        fun onRebound(type:Int,state:Int)
+    }
 }

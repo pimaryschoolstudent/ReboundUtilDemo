@@ -46,6 +46,15 @@ class ReboundUtil {
         const val HEADER_REBOUND_NORMAL = 5
         const val BOTTOM_REBOUND_NORMAL = 6
 
+        /**
+         * 回弹类型
+         * */
+        const val REBOUND_HEADER = 7
+        const val REBOUND_BOTTOM = 8
+        const val REBOUND_START = 9
+        const val REBOUND_END = 10
+        const val REBOUND_ING = 11
+
         @Synchronized
         fun getUtil(activity:Activity):ReboundUtil{
             if (utils.keys.contains(activity)){
@@ -96,6 +105,12 @@ class ReboundUtil {
      * recyclerview滑动监听
      * */
     private var recyclerViewOnScrollListener: RecyclerView.OnScrollListener?=null
+
+
+    /**
+     * 回弹间隔
+     * */
+    private var reboundDuration:Int = 1000
 
     /**
      * 设置回弹动作类别
@@ -294,11 +309,17 @@ class ReboundUtil {
 //        }
     }
 
+    /**
+     * 设置阻力因子
+     * */
     fun setResistanceFactor(double: Double):ReboundUtil{
         reboundLayout?.setResistanceFactor(double)
         return this
     }
 
+    /**
+     * 更新滑动布局
+     * */
     fun updateRecyclerviewLayoutChange(recyclerView: RecyclerView){
         if (recyclerView.adapter!=null){
             recyclerView.adapter!!.notifyDataSetChanged()
@@ -346,13 +367,20 @@ class ReboundUtil {
     }
 
     /**
-     * 获取展开布局
+     * 设置回弹间隔
      * */
-    fun getRootLayout():ReboundLayout{
-        if (reboundLayout == null){
-            throw NullPointerException()
-        }
-        return reboundLayout!!
+    fun setReboundDuration(duration:Int):ReboundUtil{
+        this.reboundDuration = duration
+        reboundLayout?.setReboundDuration(duration)
+        return this
+    }
+
+    /**
+     * 设置监听
+     * */
+    fun setOnReboundListener(listener: ReboundLayout.OnReboundListener):ReboundUtil{
+        reboundLayout?.setOnReboundListener(listener)
+        return this
     }
 
 }

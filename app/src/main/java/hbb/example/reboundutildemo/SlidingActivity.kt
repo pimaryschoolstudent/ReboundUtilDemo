@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import hbb.example.reboundutil.ReboundLayout
 import hbb.example.reboundutil.ReboundUtil
 import kotlinx.android.synthetic.main.activity_sliding.*
 
@@ -55,7 +57,29 @@ class SlidingActivity :AppCompatActivity(){
             .setHeadBoundView(R.layout.header_view, LayoutInflater.from(this)) //设置头部View
             .setBottomBoundView(bottomView) //设置底部View
             .setBoundType(ReboundUtil.HEADER_REBOUND_LIMIT,ReboundUtil.BOTTOM_REBOUND_NORMAL) //设置滑动方式  limit：滑动距离不超过组件距离  normal：滑动距离可超过组件距离
+            .setReboundDuration(3000)
+            .setOnReboundListener(object : ReboundLayout.OnReboundListener{
+                override fun onRebound(type: Int, state: Int) {
 
+                    if (type == ReboundUtil.REBOUND_HEADER){
+                        Log.d("rebound","顶部回弹")
+                    }else if (type == ReboundUtil.REBOUND_BOTTOM){
+                        Log.d("rebound","底部回弹")
+                    }
+
+                    if (state == ReboundUtil.REBOUND_START){
+                        Log.d("rebound","开始回弹")
+                    }
+                    if (state == ReboundUtil.REBOUND_ING){
+                        Log.d("rebound","回弹中")
+                    }
+                    if (state == ReboundUtil.REBOUND_END){
+                        Log.d("rebound","回弹结束")
+                    }
+
+                }
+
+            })
     }
 
     inner class SimpleAdapter(var context: Context) : RecyclerView.Adapter<ViewHolder>(){
