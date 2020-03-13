@@ -15,7 +15,7 @@
 		  
 ## app目录下的build.gradle添加 
   
-  	implementation 'com.github.pimaryschoolstudent:ReboundUtilDemo:1.0.0'
+  	implementation 'com.github.pimaryschoolstudent:ReboundUtilDemo:1.0.1'
   
 # 使用教程：
 ## 不可滑动界面（界面不包括recyclerview，srollview等滑动元素）
